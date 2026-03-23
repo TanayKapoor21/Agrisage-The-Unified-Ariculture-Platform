@@ -31,7 +31,7 @@ graph TD
     H -->|Real-time Responses| B
     B -->|Localized Output| A
     
-    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style A fill:#f9f,stroke:#333,stroke-width:2px,color:#fff
     style E fill:#4285F4,stroke:#fff,stroke-width:2px,color:#fff
     style D fill:#4479A1,stroke:#fff,stroke-width:2px,color:#fff
     style H fill:#10b981,stroke:#fff,stroke-width:2px,color:#fff
