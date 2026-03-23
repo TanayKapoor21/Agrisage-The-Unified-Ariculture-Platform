@@ -16,6 +16,27 @@
 
 The goal of the MVP is to solve the three most immediate "pain points" for a farmer: **Price Uncertainty**, **Weather Risk**, and **Lack of Expert Advice**.
 
+### 🔄 Platform Workflow
+
+```mermaid
+graph TD
+    A[User / Farmer] -->|Queries/Voice/Inputs| B(React Frontend)
+    B -->|API Requests| C{Express Backend}
+    C -->|Authenticate/Store| D[(MySQL Database)]
+    C -->|Fetch Intelligence| E{Gemini 2.5 Flash AI}
+    E -->|Scrape/Structure| F[Live Mandi Data]
+    E -->|Analyze| G[Weather & Soil data]
+    F --> H[Actionable Insights]
+    G --> H
+    H -->|Real-time Responses| B
+    B -->|Localized Output| A
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#4285F4,stroke:#fff,stroke-width:2px,color:#fff
+    style D fill:#4479A1,stroke:#fff,stroke-width:2px,color:#fff
+    style H fill:#10b981,stroke:#fff,stroke-width:2px,color:#fff
+```
+
 ### 1. Core "Must-Have" Features (Functional Now)
 *   🛰️ **Real-Time Mandi Discovery**: A searchable interface to get live prices for major commodities (Wheat, Paddy, Cotton, etc.) using AI-grounded web data.
 *   🌤️ **Hyper-Local Weather Forecast**: A 5-day precision forecast with humidity and wind speed data to guide irrigation and harvesting schedules.
