@@ -119,7 +119,7 @@ To show that AgriSage has "legs," we are planning the following phases:
 ### 📚 Mentorship & Guidance
 A special thanks to our mentors for their invaluable guidance:
 *   **Dr. Anuradha Dhull**
-*   **Asha Sohal**
+*   **Mrs. Asha Sohal**
 
 ---
 
