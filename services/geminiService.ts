@@ -6,7 +6,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 export const getFarmingExpertResponse = async (query: string, language: string) => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents: `User language: ${language}. Role: Senior Agricultural Scientist. Answer this query: ${query}`,
       config: {
         systemInstruction: "You are AgriSage, a helpful agricultural expert assisting farmers with crops, pests, market trends, and modern farming techniques. Be concise and practical.",
@@ -23,7 +23,7 @@ export const getFarmingExpertResponse = async (query: string, language: string) 
 export const getCropSuggestions = async (soilType: string, location: string, month: string) => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents: `Suggest 3 crops for soil: ${soilType}, location: ${location}, month: ${month}. Return as JSON.`,
       config: {
         responseMimeType: "application/json",
@@ -53,7 +53,7 @@ export const getCropSuggestions = async (soilType: string, location: string, mon
 export const getPlantingGuide = async (cropName: string, language: string) => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents: `Provide a planting guide for ${cropName} in ${language}. Include: Sowing time, Soil depth, Water frequency, and Harvesting tips.`,
       config: {
         systemInstruction: "You are a specialized agricultural guide. Provide structured, bulleted farming advice.",
@@ -70,7 +70,7 @@ export const getPlantingGuide = async (cropName: string, language: string) => {
 export const analyzeCropImage = async (base64Image: string, location: string) => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents: {
         parts: [
           {

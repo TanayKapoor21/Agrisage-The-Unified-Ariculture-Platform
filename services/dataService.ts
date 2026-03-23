@@ -25,7 +25,7 @@ export interface MarketPrice {
 export const fetchRealTimeData = async (location: string): Promise<{ weather: WeatherData; market: MarketPrice[] }> => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
+      model: "gemini-2.5-flash",
       contents: `Fetch current real-time weather and agricultural market prices for ${location}. 
       Include at least 3 major commodities relevant to ${location}. For history, provide 4 data points.`,
       config: {
