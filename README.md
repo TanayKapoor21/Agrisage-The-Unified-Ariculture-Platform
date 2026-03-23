@@ -108,6 +108,22 @@ To show that AgriSage has "legs," we are planning the following phases:
 
 ---
 
+## 👥 Meet the Team
+
+| Name | Role |
+| :--- | :--- |
+| **Tanay Kapoor** | Core Developer / AI Integration |
+| **Akash Yadav** | Backend Developer / Database |
+| **Kanika Yadav** | Frontend Architect / UI Design |
+| **Srasthti Chauhan** | Data Analyst / Market Intelligence |
+
+### 📚 Mentorship & Guidance
+A special thanks to our mentors for their invaluable guidance:
+*   **Dr. Anuradha Dhull**
+*   **Asha Sohal**
+
+---
+
 <div align="center">
   <p>Built with ❤️ for the farming community.</p>
   <p>© 2026 AgriSage Team</p>
