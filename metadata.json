@@ -1,0 +1,9 @@
+{
+  "name": "AgriSage: the Unified Agriculture platform",
+  "description": "A comprehensive multilingual agricultural platform providing crop guidance, market rates, waste management, and AI-powered farming assistance with specialized accessibility features.",
+  "requestFramePermissions": [
+    "microphone",
+    "geolocation",
+    "camera"
+  ]
+}
