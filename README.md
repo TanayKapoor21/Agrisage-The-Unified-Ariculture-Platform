@@ -4,18 +4,12 @@
 <div align="center">
   <img src="agrisage logo.png" alt="AgriSage Logo" width="100%" style="border-radius: 24px; margin: 20px 0;" />
 
+  [![MySQL 8.0](https://img.shields.io/badge/MySQL_8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
   [![React 19](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
   [![Vite 6](https://img.shields.io/badge/Vite_6-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-  [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
-  [![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)](https://expressjs.com/)
-  [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-  [![Gemini AI](https://img.shields.io/badge/Gemini%20AI-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
-  [![ONNX](https://img.shields.io/badge/ONNX-005CED?style=for-the-badge&logo=onnx&logoColor=white)](https://onnx.ai/)
-  [![Vite 6](https://img.shields.io/badge/Vite_6-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
   [![Gemini 3 Flash](https://img.shields.io/badge/Gemini_3_Flash-4285F4?style=for-the-badge&logo=google-gemini&logoColor=white)](https://ai.google.dev/)
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-  [![Recharts](https://img.shields.io/badge/Recharts-22b5bf?style=for-the-badge)](https://recharts.org/)
   [![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
   [![Recharts](https://img.shields.io/badge/Recharts-22b5bf?style=for-the-badge)](https://recharts.org/)
 </div>
@@ -135,10 +129,25 @@ A multilingual, voice-enabled assistant that provides science-backed agricultura
 
 ---
 
+## 🗄️ Data Ecosystem: AgriSage Database
+The AgriSage platform is powered by a robust **MySQL** schema (**Agrisage**) designed for scalability and high-performance agricultural data management.
+
+### 🧩 Core Tables & Relationships
+1.  **`users`**: Secure authentication with hashed passwords, regional profile data, and farm-specific attributes.
+2.  **`diagnostics`**: Historical record of AI-driven crop scans, storing health status, infection stages (1-4), and pathogen classifications.
+3.  **`market_prices`**: Time-series repository for Mandi commodity trends across various regional hubs.
+4.  **`climate_alerts`**: Log of precision meteorological advisories tied to specific geographical coordinates.
+5.  **`waste_centers`**: Geospatial directory of stubble-to-energy facilities (connected to our Map feature).
+6.  **`carbon_credits`**: A dedicated ledger tracking sustainable farming impact, residue monetization, and earned credits.
+7.  **`farming_guides`**: Multilingual library of localized crop-specific agricultural guidance.
+
+---
+
 ## 🛠️ Getting Started
 
 ### Prerequisites
 - **Node.js** (v20 or higher)
+- **MySQL Server** (v8.0+)
 - **Gemini API Key** (from [Google AI Studio](https://aistudio.google.com/))
 
 ### Installation
@@ -148,20 +157,32 @@ A multilingual, voice-enabled assistant that provides science-backed agricultura
     cd Agrisage-The-Unified-Ariculture-Platform
     ```
 
-2.  **Install Dependencies**
+2.  **Database Setup**
+    Initialize the AgriSage ecosystem by executing the schema in your MySQL client:
+    ```bash
+    mysql -u your_user -p < schema.sql
+    ```
+
+3.  **Install Dependencies**
     ```bash
     npm install
     ```
 
-3.  **Configuration**
+4.  **Configuration**
     Create a `.env` file in the root:
     ```env
     VITE_GEMINI_API_KEY=your_gemini_key_here
     VITE_WEATHER_API_KEY=your_weatherapi_key_here
     VITE_GOOGLE_MAPS_API_KEY=your_google_maps_key_here
+    
+    # DB Configuration (For future backend integration)
+    DB_HOST=localhost
+    DB_USER=your_user
+    DB_PASSWORD=your_password
+    DB_NAME=Agrisage
     ```
 
-4.  **Launch**
+5.  **Launch**
     ```bash
     npm run dev
     ```

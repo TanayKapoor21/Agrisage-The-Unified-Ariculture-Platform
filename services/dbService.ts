@@ -1,47 +1,52 @@
 
 import { User } from '../types';
 
-const DB_KEY = 'agrisage_users';
+const API_URL = 'http://localhost:5000/api';
 const SESSION_KEY = 'agrisage_current_user';
 
 export const dbService = {
-  // Get all users from simulated DB
-  getUsers: (): User[] => {
-    const data = localStorage.getItem(DB_KEY);
-    return data ? JSON.parse(data) : [];
-  },
-
   // Save a new user
-  register: (user: Omit<User, 'id'>): { success: boolean; message: string; user?: User } => {
-    const users = dbService.getUsers();
-    if (users.find(u => u.email === user.email)) {
-      return { success: false, message: 'User already exists with this email.' };
+  register: async (user: Omit<User, 'id'>): Promise<{ success: boolean; message: string; user?: User }> => {
+    try {
+      const response = await fetch(`${API_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      });
+      const data = await response.json();
+      
+      if (response.ok) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+        return { success: true, message: 'Registration successful!', user: data };
+      } else {
+        return { success: false, message: data.message || 'Registration failed' };
+      }
+    } catch (error) {
+      console.error('Registration error:', error);
+      return { success: false, message: 'Could not connect to database' };
     }
-    
-    const newUser: User = {
-      ...user,
-      id: Math.random().toString(36).substr(2, 9),
-    };
-    
-    users.push(newUser);
-    localStorage.setItem(DB_KEY, JSON.stringify(users));
-    
-    // Auto login
-    localStorage.setItem(SESSION_KEY, JSON.stringify(newUser));
-    return { success: true, message: 'Registration successful!', user: newUser };
   },
 
   // Login check
-  login: (email: string, password: string): { success: boolean; message: string; user?: User } => {
-    const users = dbService.getUsers();
-    const user = users.find(u => u.email === email && u.password === password);
-    
-    if (user) {
-      localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-      return { success: true, message: 'Login successful!', user };
+  login: async (email: string, password: string): Promise<{ success: boolean; message: string; user?: User }> => {
+    try {
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+        return { success: true, message: 'Login successful!', user: data };
+      } else {
+        return { success: false, message: data.message || 'Invalid email or password' };
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      return { success: false, message: 'Could not connect to database' };
     }
-    
-    return { success: false, message: 'Invalid email or password.' };
   },
 
   // Get current session
