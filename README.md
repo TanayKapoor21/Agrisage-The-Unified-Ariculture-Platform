@@ -46,9 +46,13 @@ graph TD
         C3[Gemini 3 Flash]
     end
     C --> Intelligence_Core
+
+    %% Backend Service
+    Intelligence_Core --> API[Express API Server]
+    API --> DB[(MySQL Database)]
     
     %% Main Application Hub
-    Intelligence_Core --> D[Feature Ecosystem]
+    API --> D[Feature Ecosystem]
     
     %% Functional Modules
     subgraph Feature_Hub [Specialized Modules]
@@ -70,6 +74,8 @@ graph TD
     style A fill:#065f46,color:#fff,stroke-width:2px
     style B fill:#ecfdf5,stroke:#10b981
     style C fill:#eff6ff,stroke:#2563eb
+    style API fill:#10b981,color:#fff
+    style DB fill:#4479A1,color:#fff
     style D fill:#fff7ed,stroke:#f97316
     style E fill:#f8fafc,stroke:#64748b,stroke-dasharray: 5 5
 ```
