@@ -5,8 +5,7 @@
   <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=80" alt="AgriSage Banner" width="100%" style="border-radius: 24px; margin: 20px 0;" />
 
   [![React 19](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
-  [![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
-  [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+  [![Vite 6](https://img.shields.io/badge/Vite_6-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
   [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
   [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
   [![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)](https://expressjs.com/)
@@ -18,6 +17,7 @@
   [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
   [![Recharts](https://img.shields.io/badge/Recharts-22b5bf?style=for-the-badge)](https://recharts.org/)
   [![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+  [![Recharts](https://img.shields.io/badge/Recharts-22b5bf?style=for-the-badge)](https://recharts.org/)
 </div>
 
 ---
@@ -63,7 +63,7 @@ graph TD
     %% Feature Ecosystem
     Core --> Features{Core Feature Hub}
 
-    subgraph Features [Platform Ecosystem]
+    subgraph Features_Hub [Platform Ecosystem]
         Features --> CVS[Computer Vision Scanner]
         Features --> GID[Geospatial Intelligence Dashboard]
         Features --> MID[Market Intelligence Dashboard]
@@ -91,7 +91,7 @@ graph TD
     style User fill:#065f46,color:#fff,stroke-width:4px
     style Access fill:#ecfdf5,stroke:#10b981
     style Core fill:#eff6ff,stroke:#2563eb,stroke-width:2px
-    style Features fill:#fff7ed,stroke:#f97316
+    style Features_Hub fill:#fff7ed,stroke:#f97316
     style Data fill:#f8fafc,stroke:#64748b,stroke-dasharray: 5 5
 ```
 
