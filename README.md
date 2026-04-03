@@ -201,7 +201,7 @@ A multilingual, voice-enabled assistant that provides science-backed agricultura
 | **Srasthti Chauhan** | Agricultural Intelligence & Data Analysis |
 
 ### 📚 Guidance & Mentorship
-Special thanks to **Dr. Anuradha Dhull** and **Mrs. Asha Sohal** for their scientific guidance and agricultural insights.
+Special thanks to **Dr. Anuradha Dhull** and **Dr. Asha Sohal** for their scientific guidance and agricultural insights.
 
 ---
 
