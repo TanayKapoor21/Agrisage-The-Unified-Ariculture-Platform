@@ -2,7 +2,7 @@
 **Empowering India's Farmers with Intelligent Insights & Live Market Data**
 
 <div align="center">
-  <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=1200&q=80" alt="AgriSage Banner" width="100%" style="border-radius: 24px; margin: 20px 0;" />
+  <img src="agrisage logo.png" alt="AgriSage Logo" width="100%" style="border-radius: 24px; margin: 20px 0;" />
 
   [![React 19](https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
   [![Vite 6](https://img.shields.io/badge/Vite_6-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
