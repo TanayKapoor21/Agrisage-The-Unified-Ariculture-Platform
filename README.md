@@ -34,65 +34,50 @@ AgriSage leverages a **Hierarchical Multi-Modal Fusion Network (HMMFN)** concept
 
 ```mermaid
 graph TD
-    %% Global Interaction
-    User((Farmer / User)) --> Access{Experience Layer}
+    %% User Entry
+    A[Farmer / User] --> B{Experience Layer}
     
-    subgraph Access [Access & Interaction]
-        Access --> Lan[Multilingual: EN/HI/TA/PA/MR]
-        Access --> AccM[Accessibility: High-Contrast / Icon-Mode]
-        Access --> Voice[Voice AI: Multi-Dialect Advisor]
-    end
-
+    %% Experience Features
+    B --> B1[Multilingual Support]
+    B --> B2[Accessibility Modes]
+    B --> B3[Voice AI Advisor]
+    
     %% Intelligence Core
-    Access --> Core[AgriSage Intelligence Core]
+    B1 & B2 & B3 --> C[AgriSage Intelligence Core]
     
-    subgraph Core [The Brain: HMMFN & LLM Fusion]
-        direction TB
-        subgraph Models [Deep Learning Models]
-            HMMFN[HMMFN Architecture]
-            DPF[Disease Prediction: Stage 1-4]
-            TFT[Temporal Fusion Transformer]
-        end
-        subgraph LLM [LLM Grounding]
-            G3F[Gemini 3 Flash]
-            GS[Google Search Grounding]
-        end
-        Models <--> LLM
+    %% Core Technologies
+    subgraph Intelligence_Core [Model & LLM Fusion]
+        C1[HMMFN Architecture]
+        C2[Disease Prediction]
+        C3[Gemini 3 Flash]
     end
-
-    %% Feature Ecosystem
-    Core --> Features{Core Feature Hub}
-
-    subgraph Features_Hub [Platform Ecosystem]
-        Features --> CVS[Computer Vision Scanner]
-        Features --> GID[Geospatial Intelligence Dashboard]
-        Features --> MID[Market Intelligence Dashboard]
-        Features --> SEP[Sustainable Energy Portal]
-    end
-
-    %% Detailed Results
-    CVS -->|Analysis| DDiag[Disease Diagnosis & Health]
-    GID -->|Visualization| MAP[India Regional Yield Map]
-    MID -->|Scraping| LMC[Live Mandi Price Pulse]
-    SEP -->|Monetization| CEC[Waste Exchange & Carbon Credit]
-
-    %% Data Infrastructure
-    DDiag & MAP & LMC & CEC --> Data[(Real-Time Feed)]
+    C --> Intelligence_Core
     
-    subgraph Data [Infrastructure & Sources]
-        direction LR
-        S1[ISRO Satellite Feed]
-        S2[WeatherAPI Forecast]
-        S3[Mandi Verified Data]
-        S4[LocalStorage Persistence]
+    %% Main Application Hub
+    Intelligence_Core --> D[Feature Ecosystem]
+    
+    %% Functional Modules
+    subgraph Feature_Hub [Specialized Modules]
+        D1[Crop Scanner]
+        D2[Market Dashboard]
+        D3[Geospatial Map]
+        D4[Sustainable Portal]
     end
+    D --> Feature_Hub
+
+    %% Data & Impact
+    Feature_Hub --> E[Real-Time Impact]
+    E --> E1[Yield Insights]
+    E --> E2[Mandi Prices]
+    E --> E3[Climate Alerts]
+    E --> E4[Carbon Credits]
 
     %% Styling
-    style User fill:#065f46,color:#fff,stroke-width:4px
-    style Access fill:#ecfdf5,stroke:#10b981
-    style Core fill:#eff6ff,stroke:#2563eb,stroke-width:2px
-    style Features_Hub fill:#fff7ed,stroke:#f97316
-    style Data fill:#f8fafc,stroke:#64748b,stroke-dasharray: 5 5
+    style A fill:#065f46,color:#fff,stroke-width:2px
+    style B fill:#ecfdf5,stroke:#10b981
+    style C fill:#eff6ff,stroke:#2563eb
+    style D fill:#fff7ed,stroke:#f97316
+    style E fill:#f8fafc,stroke:#64748b,stroke-dasharray: 5 5
 ```
 
 ---
