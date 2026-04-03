@@ -17,7 +17,8 @@ import {
   Leaf,
   ChevronRight,
   Activity,
-  Award
+  Award,
+  Mic
 } from 'lucide-react';
 import { Language, AccessibilityMode, User as UserType } from './types';
 import { UI_TRANSLATIONS, LANGUAGES, FEATURE_CARDS, LOCATIONS } from './constants';
@@ -35,6 +36,8 @@ import CropScanner from './components/CropScanner';
 import Auth from './components/Auth';
 
 import { fetchRealTimeData, WeatherData } from './services/dataService';
+import { QuotaExceededError } from './services/apiUtils';
+import { QuotaErrorBanner } from './components/QuotaErrorBanner';
 
 const App: React.FC = () => {
   const [lang, setLang] = useState<Language>('en');
@@ -50,6 +53,7 @@ const App: React.FC = () => {
   const [isLangOpen, setIsLangOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [headerWeather, setHeaderWeather] = useState<WeatherData | null>(null);
+  const [showQuotaError, setShowQuotaError] = useState(false);
 
   const t = UI_TRANSLATIONS[lang];
 
@@ -94,8 +98,15 @@ const App: React.FC = () => {
   useEffect(() => {
     if (activeLocation) {
       const loadHeaderWeather = async () => {
-        const data = await fetchRealTimeData(activeLocation);
-        setHeaderWeather(data?.weather || null);
+        try {
+          const data = await fetchRealTimeData(activeLocation);
+          setHeaderWeather(data?.weather || null);
+          setShowQuotaError(false);
+        } catch (error) {
+          if (error instanceof QuotaExceededError) {
+            setShowQuotaError(true);
+          }
+        }
       };
       loadHeaderWeather();
     }
@@ -158,6 +169,12 @@ const App: React.FC = () => {
               className="px-10 py-5 bg-lime-400 text-emerald-950 font-black rounded-2xl hover:bg-white hover:scale-105 transition-all transform active:scale-95 flex items-center gap-3 shadow-[0_20px_50px_rgba(163,230,53,0.3)] text-sm uppercase tracking-widest"
             >
               Scan Crop <Camera size={20} strokeWidth={3} />
+            </button>
+            <button 
+              onClick={() => setShowAi(true)}
+              className="px-10 py-5 bg-emerald-600 text-white font-black rounded-2xl border-2 border-emerald-500/50 backdrop-blur-xl hover:bg-emerald-500 transition-all flex items-center gap-3 text-sm uppercase tracking-widest shadow-[0_20px_50px_rgba(16,185,129,0.2)]"
+            >
+              Voice Assistant <Mic size={20} strokeWidth={3} className="animate-pulse" />
             </button>
             <button 
               onClick={() => setActiveTab('crop')}
@@ -302,7 +319,7 @@ const App: React.FC = () => {
       }} />;
       case 'rates': return <MarketDashboard location={activeLocation} />;
       case 'waste': 
-      case 'carbon': return <SustainablePortal />;
+      case 'carbon': return <SustainablePortal location={activeLocation} />;
       case 'market': return <Marketplace />;
       case 'climate': return <ClimateAlerts location={activeLocation} />;
       case 'guide': return <PlantingGuide language={lang} initialCrop={guideCrop} />;
@@ -528,17 +545,28 @@ const App: React.FC = () => {
         className="fixed bottom-8 right-8 p-2.5 bg-emerald-950 text-white rounded-2xl shadow-2xl hover:scale-110 active:scale-90 transition-all z-40 flex items-center gap-2.5 group border border-white/10 ring-4 ring-white/50 backdrop-blur-md"
       >
         <div className="relative bg-white p-1 rounded-lg text-emerald-950 shadow-lg w-8 h-8 flex items-center justify-center overflow-hidden border border-emerald-100">
-          <img 
-            src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=64&h=64&q=80" 
-            alt="AI" 
-            className="w-full h-full object-cover rounded-md"
-            referrerPolicy="no-referrer"
-          />
+          <Mic size={18} className="text-emerald-600 animate-pulse" />
         </div>
-        <span className="font-black tracking-widest uppercase text-[10px] pr-1.5">Ask AI Advisor</span>
+        <span className="font-black tracking-widest uppercase text-[10px] pr-1.5">Voice AI Advisor</span>
       </button>
 
       {showAi && <VoiceChat language={lang} onClose={() => setShowAi(false)} />}
+      
+      {showQuotaError && (
+        <QuotaErrorBanner 
+          onRetry={() => {
+            setShowQuotaError(false);
+            // Re-trigger weather load
+            if (activeLocation) {
+              fetchRealTimeData(activeLocation)
+                .then(data => setHeaderWeather(data?.weather || null))
+                .catch(err => {
+                  if (err instanceof QuotaExceededError) setShowQuotaError(true);
+                });
+            }
+          }} 
+        />
+      )}
     </div>
   );
 };

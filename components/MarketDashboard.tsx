@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
-import { TrendingUp, TrendingDown, Minus, IndianRupee, PieChart, Activity, AlertCircle, Loader2 } from 'lucide-react';
-import { fetchRealTimeData, MarketPrice } from '../services/dataService';
+import { TrendingUp, TrendingDown, Minus, IndianRupee, PieChart, Activity, AlertCircle, Loader2, CheckCircle2, Zap } from 'lucide-react';
+import { fetchRealTimeData, MarketPrice, getInstantMarketData } from '../services/dataService';
 
 interface MarketDashboardProps {
   location: string;
@@ -13,33 +13,61 @@ const MarketDashboard: React.FC<MarketDashboardProps> = ({ location }) => {
   const [selected, setSelected] = useState<MarketPrice | null>(null);
   const [view, setView] = useState<'price' | 'volume'>('price');
   const [loading, setLoading] = useState(true);
+  const [isEstimated, setIsEstimated] = useState(true);
 
   useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      const data = await fetchRealTimeData(location);
-      setPrices(data?.market || []);
-      setSelected(data?.market?.[0] || null);
-      setLoading(false);
+    // 1. Show instant estimated data immediately
+    const instantData = getInstantMarketData(location);
+    setPrices(instantData);
+    setSelected(instantData[0]);
+    setIsEstimated(true);
+    setLoading(false); // We can stop the full-page loader immediately
+
+    // 2. Fetch real-time data in the background
+    const loadRealData = async () => {
+      try {
+        const data = await fetchRealTimeData(location);
+        if (data?.market && data.market.length > 0) {
+          setPrices(data.market);
+          setSelected(data.market[0]);
+          setIsEstimated(false);
+        }
+      } catch (error) {
+        console.error("Failed to fetch real-time data, staying with estimates", error);
+      }
     };
-    loadData();
+    loadRealData();
   }, [location]);
 
-  if (loading || !selected) {
+  if (!selected) {
     return (
       <div className="h-[600px] flex flex-col items-center justify-center gap-4 bg-white dark:bg-slate-900 rounded-[3rem] border-2 border-dashed border-slate-200 dark:border-slate-800">
         <Loader2 className="w-12 h-12 text-emerald-500 animate-spin" />
-        <p className="text-sm font-black text-slate-400 uppercase tracking-widest">Analyzing Market Trends for {location}...</p>
+        <p className="text-sm font-black text-slate-400 uppercase tracking-widest">Initializing Market Feed...</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl border-2 border-slate-100 dark:border-slate-800 p-8 md:p-12 space-y-12 transition-colors duration-300">
-      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8">
+    <div className="bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl border-2 border-slate-100 dark:border-slate-800 p-8 md:p-12 space-y-12 transition-colors duration-300 relative overflow-hidden">
+      {/* Background Glow */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/5 rounded-full -mr-64 -mt-64 blur-[100px] pointer-events-none"></div>
+      
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 relative z-10">
         <div className="space-y-2">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-full text-[10px] font-black uppercase tracking-widest">
-            <Activity size={12} /> Live Exchange Feed
+          <div className="flex items-center gap-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-amber-100 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-full text-[10px] font-black uppercase tracking-widest">
+              <Activity size={12} /> Live Exchange Feed
+            </div>
+            {isEstimated ? (
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 dark:bg-blue-900/20 text-blue-700 dark:text-blue-400 rounded-full text-[10px] font-black uppercase tracking-widest animate-pulse">
+                <Zap size={12} /> Instant Estimates
+              </div>
+            ) : (
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-100 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 rounded-full text-[10px] font-black uppercase tracking-widest">
+                <CheckCircle2 size={12} /> Verified Data
+              </div>
+            )}
           </div>
           <h2 className="text-4xl font-black text-slate-900 dark:text-slate-100 flex items-center gap-3">
             Market <span className="text-emerald-600 underline decoration-lime-400">Intelligence</span>

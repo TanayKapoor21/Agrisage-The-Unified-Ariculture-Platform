@@ -47,6 +47,15 @@ export enum AccessibilityMode {
   ICON_ONLY = 'ICON_ONLY'
 }
 
+declare global {
+  interface Window {
+    aistudio: {
+      hasSelectedApiKey: () => Promise<boolean>;
+      openSelectKey: () => Promise<void>;
+    };
+  }
+}
+
 export interface AppState {
   language: Language;
   accessibility: AccessibilityMode;

@@ -2,6 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, RefreshCw, CheckCircle2, AlertCircle, Loader2, Info, MapPin, FlaskConical, ThermometerSun } from 'lucide-react';
 import { analyzeCropImage } from '../services/geminiService';
+import { QuotaExceededError } from '../services/apiUtils';
 
 interface CropScannerProps {
   location: string;
@@ -76,12 +77,20 @@ const CropScanner: React.FC<CropScannerProps> = ({ location }) => {
       ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       const base64Image = canvas.toDataURL('image/jpeg', 0.8).split(',')[1];
       
-      const result = await analyzeCropImage(base64Image, location);
-      if (result) {
-        setAnalysis(result);
-        stopCamera();
-      } else {
-        setError("Failed to analyze image. Please try again.");
+      try {
+        const result = await analyzeCropImage(base64Image, location);
+        if (result) {
+          setAnalysis(result);
+          stopCamera();
+        } else {
+          setError("Failed to analyze image. Please try again.");
+        }
+      } catch (err) {
+        if (err instanceof QuotaExceededError) {
+          setError("API Quota exceeded. Please try again later or select a different API key.");
+        } else {
+          setError("Failed to analyze image. Please try again.");
+        }
       }
     }
     setIsScanning(false);

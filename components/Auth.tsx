@@ -22,21 +22,22 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess }) => {
     location: ''
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    try {
+    // Simulate network delay
+    setTimeout(() => {
       if (isLogin) {
-        const res = await dbService.login(formData.email, formData.password);
+        const res = dbService.login(formData.email, formData.password);
         if (res.success && res.user) {
           onLoginSuccess(res.user);
         } else {
           setError(res.message);
         }
       } else {
-        const res = await dbService.register({
+        const res = dbService.register({
           name: formData.name,
           email: formData.email,
           password: formData.password,
@@ -48,11 +49,8 @@ const Auth: React.FC<AuthProps> = ({ onLoginSuccess }) => {
           setError(res.message);
         }
       }
-    } catch (err) {
-      setError('An error occurred. Please try again.');
-    } finally {
       setLoading(false);
-    }
+    }, 800);
   };
 
   const handleGuestAccess = () => {
