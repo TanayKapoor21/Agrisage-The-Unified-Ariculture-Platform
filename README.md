@@ -117,7 +117,7 @@ An interactive SVG-based regional dashboard providing a "Regional Pulse" of Indi
 ### 📍 Waste Management Network
 Real-time Google Maps integration to locate verified stubble recycling, composting, and biomass energy facilities. Helps farmers monetize agricultural waste and reduce environmental impact.
 
-### 🔍 Computer Vision Crop Scanne
+### 🔍 Computer Vision Crop Scanner
 Identify pests and diseases instantly using your device's camera. Leveraging 3D-CNN streams for spatial-spectral fusion.
 
 ### 📊 Market Intelligence Pulse
